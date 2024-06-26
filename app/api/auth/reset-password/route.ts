@@ -2,9 +2,9 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function ForgotPassword(res:NextResponse, email: string) {
+export async function GET(req:NextRequest, email: string) {
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
 
