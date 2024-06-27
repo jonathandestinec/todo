@@ -10,6 +10,8 @@ import { AddTodo } from '@/utils/todo/addTodo'
 import { CheckTodo } from '@/utils/todo/checkTodo'
 import { DeleteTodo } from '@/utils/todo/deleteTodo'
 import { useToast } from "@/components/ui/use-toast"
+import { Skeleton } from "@/components/ui/skeleton"
+import "./page.css"
 
 
 function page() {
@@ -54,6 +56,9 @@ function page() {
       setIsLoading(true)
 
       const { error } = await AddTodo(todoText)
+
+      // Clear input
+      setTodoText("")
 
       if (error) {
         toast({
@@ -111,7 +116,6 @@ function page() {
 
     const { response } = await DeleteTodo(id)
 
-    console.log(response)
     getTodos()
   }
 
@@ -121,24 +125,24 @@ function page() {
 
   if (checkingAuth) {
     return (
-      <div className=' w-screen h-screen flex items-center justify-center'>
+      <div className=' w-screen h-screen flex items-center justify-center backdrop-blur-2xl'>
         <p className=' text-2xl text-center font-black font-mono'>Loading...</p>
       </div>
     )
   } else {
     return (
-      <div>
+      <div className=' w-screen h-screen backdrop-blur-2xl'>
         <a className=' text-base font-mono text-blue-500 text-right w-screen flex items-center justify-end pr-10 box-border pt-5 pb-5' href="/api/auth/logout">Signout</a>
         <h1 className=' text-2xl text-center font-bold'>Home Page</h1>
 
         <div className=' md:w-2/3 w-4/5 h-14 ml-auto mr-auto flex items-center justify-center gap-5 mt-10'>
-          <input type="text" placeholder='Add todo' className=' w-3/4 pl-5 pr-5 h-full ring-1 ring-black focus:ring-2 outline-none rounded-lg ease-in-out transition duration-100 text-lg' onChange={(e) => {
+          <input type="text" placeholder='Add todo' className=' w-3/4 pl-5 pr-5 h-full ring-1 ring-black focus:ring-2 outline-none rounded-lg ease-in-out transition duration-100 text-lg bg-transparent' onChange={(e) => {
             setTodoText(e.target.value)
-          }} />
+          }} value={todoText} />
           <button className=' w-1/4 h-full text-center rounded-lg bg-black text-white text-lg' onClick={addTodo}>Add</button>
         </div>
 
-        <ScrollArea className="h-[20rem] md:w-2/3 w-4/5 rounded-md border p-4 pt-10 ml-auto mr-auto mt-10">
+        <ScrollArea className="h-[20rem] md:w-2/3 w-4/5 rounded-lg border p-4 pt-10 ml-auto mr-auto mt-10 ring-1 ring-black">
 
           {/* Todos */}
 
@@ -146,7 +150,16 @@ function page() {
             isLoading ? (
               (
                 <div className=' w-full h-full ml-auto mr-auto flex items-center justify-center'>
-                  <p className=' font-mono text-2xl text-center'>Loading...</p>
+                  
+                  <div className="flex flex-col space-y-3
+                  ">
+                    <Skeleton className="h-[200px] w-[550px] rounded-xl" />
+                    <div className="space-y-2">
+                      <Skeleton className="h-4 w-[400px]" />
+                      <Skeleton className="h-4 w-[350px]" />
+                    </div>
+                  </div>
+
                 </div>
               )
             ) : (
@@ -157,12 +170,12 @@ function page() {
               ) : (
                 todos.map((todo: { todo: string, completed: boolean, id: number }) => {
                   return (
-                    <div className=' flex items-center justify-between md:w-3/4 pr-5 w-5/6 box-border ml-auto mr-auto mb-8 first:font-extrabold' key={todo.id}>
+                    <div className=' flex items-center justify-between md:w-3/4 md:pr-5 w-11/12 box-border ml-auto mr-auto mb-8 first:font-extrabold text-wrap border-b-2 border-b-black pb-2' key={todo.id}>
                       {todo.completed ?
-                        (<s className=' text-2xl'>{todo.todo}</s>) :
-                        (<p className={`text-2xl`}>{todo.todo}</p>)
+                        (<s className='text-2xl pr-5 box-border'>{todo.todo}</s>) :
+                        (<p className={`text-2xl pr-5 box-border`}>{todo.todo}</p>)
                       }
-                      <div className=' flex items-center justify-center gap-10'>
+                      <div className=' flex items-center justify-center md:gap-10 gap-5'>
 
                         {/* Check box */}
                         <i className={`fi ${todo.completed ? "fi-sr-checkbox" : "fi-rr-checkbox"} text-2xl flex items-center justify-center cursor-pointer`} onClick={() => {

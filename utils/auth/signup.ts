@@ -14,6 +14,6 @@ export async function Signup(creds: { email: string, password: string }) {
         password: creds.password
     })
 
-    return { data, error }
+    return { data, error:error?.message }
 
 }
