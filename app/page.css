@@ -73,8 +73,8 @@
 }
 
 body {
-    background-image: url("/bg.svg");
+    background-image: url("/bg.png");
     background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+    background-position: center 300px;
+    background-size: 400px;
 }

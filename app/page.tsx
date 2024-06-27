@@ -131,7 +131,7 @@ function page() {
     )
   } else {
     return (
-      <div className=' w-screen h-screen backdrop-blur-2xl'>
+      <div className=' w-screen h-screen'>
         <a className=' text-base font-mono text-blue-500 text-right w-screen flex items-center justify-end pr-10 box-border pt-5 pb-5' href="/api/auth/logout">Signout</a>
         <h1 className=' text-2xl text-center font-bold'>Home Page</h1>
 
@@ -142,7 +142,7 @@ function page() {
           <button className=' w-1/4 h-full text-center rounded-lg bg-black text-white text-lg' onClick={addTodo}>Add</button>
         </div>
 
-        <ScrollArea className="h-[20rem] md:w-2/3 w-4/5 rounded-lg border p-4 pt-10 ml-auto mr-auto mt-10 ring-1 ring-black">
+        <ScrollArea className="h-[20rem] md:w-2/3 w-4/5 rounded-lg border p-4 pt-10 ml-auto mr-auto mt-10 ring-1 ring-black backdrop-blur-2xl">
 
           {/* Todos */}
 
